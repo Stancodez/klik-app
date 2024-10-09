@@ -1,6 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
+  "homepage": "https://Stancodez.github.io/klik-app",
   "private": true,
   "proxy": "http://localhost:5000",
   "dependencies": {
@@ -42,7 +43,6 @@
     ]
   },
   "devDependencies": {
-    "homepage": "https://Stancodez.github.io/klik-app",
     "gh-pages": "^6.1.1"
   }
 }
