@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/klik-app/static/css/main.a333eb94.css",
+    "main.js": "/klik-app/static/js/main.f6000faa.js",
+    "static/js/453.419a5d54.chunk.js": "/klik-app/static/js/453.419a5d54.chunk.js",
+    "index.html": "/klik-app/index.html",
+    "main.a333eb94.css.map": "/klik-app/static/css/main.a333eb94.css.map",
+    "main.f6000faa.js.map": "/klik-app/static/js/main.f6000faa.js.map",
+    "453.419a5d54.chunk.js.map": "/klik-app/static/js/453.419a5d54.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a333eb94.css",
+    "static/js/main.f6000faa.js"
+  ]
+}
