@@ -10,7 +10,7 @@ import Notifications from './components/Notifications';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/klik-app">
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />

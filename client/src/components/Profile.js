@@ -1,26 +1,37 @@
-import '../styles.css';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import UpdateForm from './UpdateForm';
 
 const Profile = () => {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      const token = localStorage.getItem('token');
-      const response = await axios.get('/api/users/me', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setUser(response.data);
+    // Fetch the current user’s profile information from the backend
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get('/api/users/profile');
+        setUser(response.data);
+      } catch (err) {
+        console.error('Error fetching user profile:', err);
+      }
     };
-    fetchProfile();
+
+    fetchUser();
   }, []);
 
   return (
-    <div className="profile-container">
-      <img src={user.profilePicture} alt="Profile" />
-      <h2>{user.name}</h2>
-      <p>{user.email}</p>
+    <div>
+      {user ? (
+        <div>
+          <h2>{user.name}'s Profile</h2>
+          <p>Profession: {user.profession}</p>
+          <p>Industry: {user.industry}</p>
+          <img src={user.profilePicture} alt="Profile" />
+          <UpdateForm user={user} />
+        </div>
+      ) : (
+        <p>Loading profile...</p>
+      )}
     </div>
   );
 };

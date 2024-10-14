@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://Stancodez.github.io/klik-app",
   "proxy": "http://localhost:5000",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -42,7 +43,6 @@
     ]
   },
   "devDependencies": {
-    "homepage": "https://Stancodez.github.io/klik-app",
     "gh-pages": "^6.1.1"
   }
 }

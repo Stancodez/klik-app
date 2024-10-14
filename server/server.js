@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const connectDB = require('./config/db');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
@@ -7,6 +9,17 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const app = express();
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// Catch-all handler to serve the React app for any route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
+// Connect to the database
+connectDB();
 
 // Middleware
 app.use(express.json());  // Allows server to parse JSON request bodies
