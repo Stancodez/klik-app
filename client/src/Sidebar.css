@@ -1,0 +1,23 @@
+.sidebar a {
+  color: #3f0b55;
+  text-decoration: none;
+  display: block;
+  padding: 10px 20px;
+  transition: background 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: #25d1e7;
+}
+
+/* Make sure the sidebar is on top of other elements */
+.sidebar {
+  z-index: 1000;
+}
+
+/* Add styles for the active link */
+.sidebar a.active {
+  background-color: #444;
+  color: #fff;
+}
+

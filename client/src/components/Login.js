@@ -1,41 +1,43 @@
-import '../styles.css';
+import '../Login.css';
 import React, { useState } from 'react';
-import axios from 'axios';
 
-const Login = () => {
+function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/api/auth/login', { email, password });
-      localStorage.setItem('token', response.data.token); // Store token
-      window.location.href = '/profile'; // Redirect to profile
-    } catch (error) {
-      console.error('Login failed:', error);
-    }
+    onLogin({ email, password });
   };
 
   return (
-    <div className="login-container">
-      <form onSubmit={handleLogin}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="login-email">Email</label>
+      <input
+        type="text"
+        id="login-email"            // Added unique id
+        name="email"                // Added name attribute
+        autoComplete="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+
+      <label htmlFor="login-password">Password</label>
+      <input
+        type="password"
+        id="login-password"            // Added unique id
+        name="password"                // Added name attribute
+        autoComplete="current-password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+
+      <button type="submit">Login</button>
+      <p>
+        New user? <a href="/signup">Sign up here</a>
+      </p>
+    </form>
   );
-};
+}
 
 export default Login;

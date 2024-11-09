@@ -1,25 +1,37 @@
 import '../styles.css';
+// components/Search.js
 import React, { useState } from 'react';
+import { fetchData } from '../utils/api';
 
-const Search = ({ onSearch }) => {
+function Search() {
   const [query, setQuery] = useState('');
+  const [results, setResults] = useState([]);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
-    onSearch(query);
+  const handleSearch = async () => {
+    try {
+      const data = await fetchData(`/api/search?q=${query}`);
+      setResults(data);
+    } catch (err) {
+      console.error('Search failed:', err);
+    }
   };
 
   return (
-    <form onSubmit={handleSearch} className="search-bar">
-      <input
-        type="text"
-        placeholder="Search..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
+    <div>
+      <input 
+        type="text" 
+        value={query} 
+        onChange={(e) => setQuery(e.target.value)} 
+        placeholder="Search..." 
       />
-      <button type="submit">Search</button>
-    </form>
+      <button onClick={handleSearch}>Search</button>
+      <ul>
+        {results.map(result => (
+          <li key={result.id}>{result.name}</li>
+        ))}
+      </ul>
+    </div>
   );
-};
+}
 
 export default Search;

@@ -1,33 +1,42 @@
 import '../styles.css';
+// components/Auth.js
 import React, { useState } from 'react';
-import axios from 'axios';
+import { postData } from '../utils/api';
+import { useNavigate } from 'react-router-dom';
 
-const Auth = () => {
-  const [formData, setFormData] = useState({
-    name: '', email: '', password: '', profession: '', industry: ''
-  });
+function Auth({ isLogin }) {
+  const [formData, setFormData] = useState({ email: '', password: '' });
+  const navigate = useNavigate();
 
-  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  const onSubmit = async (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error registering user', error);
+      const endpoint = isLogin ? '/api/login' : '/api/register';
+      await postData(endpoint, formData);
+      navigate('/home');
+    } catch (err) {
+      console.error('Authentication failed:', err);
     }
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <input type="text" name="name" placeholder="Name" onChange={onChange} required />
-      <input type="email" name="email" placeholder="Email" onChange={onChange} required />
-      <input type="password" name="password" placeholder="Password" onChange={onChange} required />
-      <input type="text" name="profession" placeholder="Profession" onChange={onChange} required />
-      <input type="text" name="industry" placeholder="Industry" onChange={onChange} required />
-      <button type="submit">Register</button>
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
+        <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+        <button type="submit">{isLogin ? 'Login' : 'Register'}</button>
+      </form>
+    </div>
   );
-};
+}
 
 export default Auth;
+

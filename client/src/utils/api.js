@@ -1,25 +1,40 @@
-import axios from 'axios';
+// utils/api.js
 
-const API_BASE_URL = 'http://localhost:5000/api'; // Replace with your actual API URL
-
-// Function to fetch data
-export const fetchData = async () => {
+// Function to fetch data from an API
+export const fetchData = async (url) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/data`);
-    return response.data;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+    return await response.json();
   } catch (error) {
-    console.error('Error fetching data:', error);
+    console.error('Fetch error:', error);
     throw error;
   }
 };
 
-// Function to post data
-export const postData = async (data) => {
+// Function to post data to an API
+export const postData = async (url, data) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/data`, data);
-    return response.data;
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+    return await response.json();
   } catch (error) {
-    console.error('Error posting data:', error);
+    console.error('Post error:', error);
     throw error;
   }
 };

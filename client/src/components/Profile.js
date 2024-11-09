@@ -1,37 +1,38 @@
+import '../styles.css';
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import UpdateForm from './UpdateForm';
+import { fetchData } from '../utils/api'; // Import the fetchData function
 
 const Profile = () => {
-  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState({});
 
   useEffect(() => {
-    // Fetch the current user’s profile information from the backend
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get('/api/users/profile');
-        setUser(response.data);
-      } catch (err) {
-        console.error('Error fetching user profile:', err);
-      }
-    };
-
-    fetchUser();
+    // Fetch user profile data
+    fetchData('/api/profile')
+      .then((data) => {
+        setProfile(data);
+      })
+      .catch((err) => {
+        console.error('Error fetching profile data:', err);
+      });
   }, []);
 
   return (
-    <div>
-      {user ? (
-        <div>
-          <h2>{user.name}'s Profile</h2>
-          <p>Profession: {user.profession}</p>
-          <p>Industry: {user.industry}</p>
-          <img src={user.profilePicture} alt="Profile" />
-          <UpdateForm user={user} />
-        </div>
-      ) : (
-        <p>Loading profile...</p>
-      )}
+    <div className="profile-container">
+      <div className="profile-header">
+        {/* Display the user's image if available */}
+        {profile.imageUrl ? (
+          <img src={profile.imageUrl} alt="User" className="profile-image" />
+        ) : (
+          <div className="profile-placeholder">No Image</div>
+        )}
+        <h2>{profile.username}</h2>
+        <p>{profile.profession}</p>
+        <p>{profile.industry}</p>
+      </div>
+      <div className="profile-details">
+        <p>Email: {profile.email}</p>
+        {/* Add more user details if needed */}
+      </div>
     </div>
   );
 };

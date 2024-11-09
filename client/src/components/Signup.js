@@ -1,61 +1,86 @@
+import '../Signup.css';
 import React, { useState } from 'react';
-import axios from 'axios';
 
-const Signup = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    profession: '',
-    industry: '',
-    profilePicture: ''
-  });
+function Signup({ onSignup }) {
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [profession, setProfession] = useState('');
+  const [industry, setIndustry] = useState('');
 
-  const [message, setMessage] = useState('');
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('/api/users/register', formData);
-      setMessage(response.data.msg);
-    } catch (err) {
-      console.error(err);
-      setMessage('Error registering user');
-    }
+    onSignup({ firstname, lastname, email, password, profession, industry });
   };
 
   return (
-    <div className="signup-container">
-      <h2>Sign Up</h2>
-      <form onSubmit={handleSubmit}>
-        <label>Name:</label>
-        <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+    <form onSubmit={handleSubmit}>
+      <label htmlFor="signup-firstname">Firstname</label>
+      <input
+        type="text"
+        id="signup-firstname"           // Added unique id
+        name="firstname"                // Added name attribute
+        autoComplete="firstname"
+        value={firstname}
+        onChange={(e) => setFirstname(e.target.value)}
+      />
 
-        <label>Email:</label>
-        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+      <label htmlFor="signup-lastname">Lastname</label>
+      <input
+        type="lastname"
+        id="signup-lastname"              // Added unique id
+        name="lastname"                   // Added name attribute
+        autoComplete="lastname"
+        value={lastname}
+        onChange={(e) => setLastname(e.target.value)}
+      />
 
-        <label>Password:</label>
-        <input type="password" name="password" value={formData.password} onChange={handleChange} required />
+      <label htmlFor="signup-email">Email</label>
+      <input
+        type="text"
+        id="signup-email"           // Added unique id
+        name="email"                // Added name attribute
+        autoComplete="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
 
-        <label>Profession:</label>
-        <input type="text" name="profession" value={formData.profession} onChange={handleChange} required />
+      <label htmlFor="signup-password">Password</label>
+      <input
+        type="password"
+        id="signup-password"           // Added unique id
+        name="password"                // Added name attribute
+        autoComplete="new-password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
-        <label>Industry:</label>
-        <input type="text" name="industry" value={formData.industry} onChange={handleChange} required />
+      <label htmlFor="signup-profession">Profession</label>
+      <input
+        type="text"
+        id="signup-profession"           // Added unique id
+        name="profession"                // Added name attribute
+        autoComplete="profession"
+        value={profession}
+        onChange={(e) => setProfession(e.target.value)}
+      />
 
-        <label>Profile Picture URL:</label>
-        <input type="text" name="profilePicture" value={formData.profilePicture} onChange={handleChange} />
+      <label htmlFor="signup-industry">Industry</label>
+      <input
+        type="text"
+        id="signup-industry"           // Added unique id
+        name="industry"                // Added name attribute
+        autoComplete="industry"
+        value={industry}
+        onChange={(e) => setIndustry(e.target.value)}
+      />
 
-        <button type="submit">Register</button>
-      </form>
-
-      {message && <p>{message}</p>}
-    </div>
+      <button type="submit">Sign Up</button>
+    </form>
   );
-};
+}
 
 export default Signup;
+
+

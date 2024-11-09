@@ -1,29 +1,45 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
 import Home from './components/Home';
-import Signup from './components/Signup';
 import Login from './components/Login';
 import Profile from './components/Profile';
-import Network from './components/Network';
-import Jobs from './components/Jobs';
 import Notifications from './components/Notifications';
+import Jobs from './components/Jobs';
+import Messages from './components/Messages';
+import Settings from './components/Settings';
+import './App.css';
 
-function App() {
+const App = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   return (
-    <Router basename="/klik-app">
-      <div className="App">
+    <Router>
+      {isAuthenticated ? (
+        <div className="app-container">
+          <Header />
+          <Sidebar />
+          <main className="main-content">
+            <Routes>
+              <Route path="/home" element={<Home />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/notifications" element={<Notifications />} />
+              <Route path="/jobs" element={<Jobs />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/settings" element={<Settings />} />
+              <Route path="*" element={<Navigate to="/home" />} />
+            </Routes>
+          </main>
+        </div>
+      ) : (
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/network" element={<Network />} />
-          <Route path="/jobs" element={<Jobs />} />
-          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/login" element={<Login onLogin={() => setIsAuthenticated(true)} />} />
+          <Route path="*" element={<Navigate to="/login" />} />
         </Routes>
-      </div>
+      )}
     </Router>
   );
-}
+};
 
 export default App;

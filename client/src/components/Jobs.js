@@ -1,11 +1,21 @@
-import '../styles.css';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchData } from '../utils/api';
 
-const Jobs = () => {
+const Jobs = ({ userProfession }) => {
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    fetchData(`/api/jobs?profession=${userProfession}`).then(data => setJobs(data)); // Adjust based on API
+  }, [userProfession]);
+
   return (
-    <div>
-      <h1>Job Listings</h1>
-      <p>Find jobs related to your field.</p>
+    <div className="jobs-container">
+      <h2>Available Jobs</h2>
+      <ul>
+        {jobs.map((job, index) => (
+          <li key={index}>{job.title} - {job.company}</li>
+        ))}
+      </ul>
     </div>
   );
 };

@@ -1,0 +1,30 @@
+/* Network.css */
+
+.network {
+  padding: 20px;
+}
+
+.upload-section {
+  margin-bottom: 20px;
+}
+
+.uploaded-image {
+  width: 200px;
+  height: auto;
+  margin-top: 10px;
+}
+
+.network-content {
+  margin-top: 30px;
+}
+
+.network-item {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.network-item img {
+  width: 100%;
+  height: auto;
+}
